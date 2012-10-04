@@ -24,7 +24,7 @@ class UserIdentity extends CUserIdentity
         list($uid, $username, $password, $email) = uc_user_login($this->username, $this->password);
         if($uid > 0)
         {
-            $user = user::model()->findByPk($uid);
+            $user = User::model()->findByPk($uid);
 
             if($user == null)//说明网站数据库中没有，而ucenter中有这个用户，添加用户
             {
