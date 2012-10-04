@@ -87,7 +87,7 @@ class Article extends OzActiveRecord
 			'tag' => 'Tag',
 			'key' => 'Key',
 			'page' => 'Page',
-			'un' => Tianya::t('Author'),
+			'un' => 'Author',
 			'cto' => 'Cto',
 			'pcount' => 'Pcount',
 			'mktime' => 'Mktime',

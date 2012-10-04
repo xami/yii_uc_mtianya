@@ -50,4 +50,7 @@ if($article->cto==0){
     $cs->registerScript('fresh','function myrefresh(){window.location.reload();}setTimeout(myrefresh,6000);', CClientScript::POS_END);
 }
 
+$article->hot=$article->hot+1;
+$article->save();
+
 ?>
