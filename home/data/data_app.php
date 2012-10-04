@@ -5,7 +5,7 @@ $_SGLOBAL['app']=Array
 	1 => Array
 		(
 		'name' => 'Yii_Uc',
-		'url' => 'http://api.orzero.com/api/uc.php',
+		'url' => 'http://www.mtianya.com/api/uc.php',
 		'type' => 'DISCUZX',
 		'open' => 1,
 		'icon' => 'discuzx'
@@ -13,7 +13,7 @@ $_SGLOBAL['app']=Array
 	2 => Array
 		(
 		'name' => 'Yii_BBS',
-		'url' => 'http://bbs.orzero.com',
+		'url' => 'http://bbs.mtianya.com',
 		'type' => 'DISCUZX',
 		'open' => 1,
 		'icon' => 'discuzx'
@@ -21,7 +21,7 @@ $_SGLOBAL['app']=Array
 	3 => Array
 		(
 		'name' => '个人家园',
-		'url' => 'http://home.orzero.com',
+		'url' => 'http://home.mtianya.com',
 		'type' => 'UCHOME',
 		'open' => '0',
 		'icon' => 'uchome'

@@ -4,7 +4,7 @@ $_SCONFIG=Array
 	(
 	'sitename' => '我的空间',
 	'template' => 'default',
-	'adminemail' => 'webmaster@home.orzero.com',
+	'adminemail' => 'webmaster@home.mtianya.com',
 	'onlinehold' => 1800,
 	'timeoffset' => 8,
 	'maxpage' => 100,

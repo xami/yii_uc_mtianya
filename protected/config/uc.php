@@ -42,7 +42,7 @@ define('UC_DBTABLEPRE', 'yii_uc.uc_');            // UCenter 数据库表前缀
 
 //通信相关
 define('UC_KEY', 'ebR4GhhpZB7e9MHVJHbd&^*YHJRRWE');               // 与 UCenter 的通信密钥, 要与 UCenter 保持一致
-define('UC_API', 'http://uc.orzero.com');  // UCenter 的 URL 地址, 在调用头像时依赖此常量
+define('UC_API', 'http://uc.mtianya.com');  // UCenter 的 URL 地址, 在调用头像时依赖此常量
 define('UC_CHARSET', 'utf8');               // UCenter 的字符集
 define('UC_IP', '127.0.0.1');                    // UCenter 的 IP, 当 UC_CONNECT 为非 mysql 方式时, 并且当前应用服务器解析域名有问题时, 请设置此值
 define('UC_APPID', 1);                  // 当前应用的 ID
