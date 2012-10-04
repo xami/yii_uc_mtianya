@@ -1,0 +1,33 @@
+h1{
+    text-align: center;
+}
+
+.link {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.link a{
+    text-decoration: none;
+}
+
+.link h2 {
+    border-bottom: 1px solid #76BBFF;
+    font-size: 18px;
+    line-height: 18px;
+    padding: 0 16px 2px;
+}
+
+.link ul{
+    clear: both;
+    margin-top: -10px;
+    overflow: hidden;
+    padding: 0 16px 10px;
+}
+
+.link ul li {
+    float: left;
+    line-height: 30px;
+    margin-right: 20px;
+    list-style: none outside none;
+}

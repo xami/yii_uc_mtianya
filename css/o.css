@@ -1,0 +1,133 @@
+
+#yw0 .list-view{
+    padding: 0 200px;
+}
+article header{
+    min-width: 140px;
+}
+#yw0 div.clear{clear: both;}
+#yw1 {
+    border: 1px solid #9AAFE5;
+    font-size: 14px;
+}
+.des {
+    border: 1px solid #9AAFE5;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 4px;
+    margin-right: 2px;
+}
+#yw2 a {
+    font-size: 14px;
+    font-weight: bold;
+}
+#yw0 form{
+    background: none repeat scroll 0 0 transparent;
+    border-width: thin 0 thick;
+    float: right;
+    margin: 0;
+    padding: 1em 3em 0 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+    width: 680px;
+}
+#yw0 input{
+    width: auto;
+}
+
+.single #content h1.mg {
+    margin: 0 ;
+}
+
+#mainmenu ul{
+    display: inline-block;
+    padding: 0;
+}
+#mainmenu ul li{
+    display: inline-block;
+    float: left;
+    margin-left: 20px;
+}
+#mainmenu ul li a{
+    font-weight: bold;
+}
+
+#cse-search-box, .main_search{
+    background:none;
+    border:none;
+    float: right;
+    margin: 0;
+    padding: 0;
+}
+.lz{
+    background-color: #D7E5F5;
+    background-image: -moz-linear-gradient(center top , #D7E5F5, #CBE0F5);
+    border-color: #ABBBCC #A7B6C7 #A1AFBF;
+    border-radius: 12px 12px 12px 12px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 0 white inset;
+    color: green;
+    font: 16px/1 "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+    padding: 6px 8px 5px 8px;
+    text-align: center;
+    text-shadow: 0 1px 1px #FFFFFF;
+    width: 200px;
+    font-weight: bold;
+}
+.lz:hover{
+    background-color: #ccd9e8;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ccd9e8), color-stop(100%, #c1d4e8));
+    background-image: -webkit-linear-gradient(top, #ccd9e8, #c1d4e8);
+    background-image: -moz-linear-gradient(top, #ccd9e8, #c1d4e8);
+    background-image: -ms-linear-gradient(top, #ccd9e8, #c1d4e8);
+    background-image: -o-linear-gradient(top, #ccd9e8, #c1d4e8);
+    background-image: linear-gradient(top, #ccd9e8, #c1d4e8);
+    border-top: 1px solid #a1afbf;
+    border-left: 1px solid #9caaba;
+    border-bottom: 1px solid #96a3b3;
+    border-right: 1px solid #9caaba;
+    -webkit-box-shadow: inset 0 1px 0 0 #f2f2f2;
+    -moz-box-shadow: inset 0 1px 0 0 #f2f2f2;
+    box-shadow: inset 0 1px 0 0 #f2f2f2;
+    color: #ffffff;
+    text-shadow: 0 0 0 #3D0700;
+    cursor: pointer;
+}
+#header h1,h2{
+    margin:0 0 4px;
+}
+#header div.ad_top{
+    float: right;
+}
+#header h1,#header h2{
+    float: left;
+}
+
+#footer #cse-search-box{
+    margin: 0;
+    padding: 0;
+    float: right;
+}
+#open_snoti{
+    background-color: #CCCCCC;
+}
+.clear{
+    clear: both;
+}
+#content{
+    width: 100%;
+}
+
+article img {
+    max-width: 860px;
+}
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+
+
+
+
