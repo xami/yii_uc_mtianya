@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+sitemap: http://www.mtianya.com/api/sitemaps.xml
