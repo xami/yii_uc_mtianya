@@ -72,7 +72,7 @@ EOF;
                     $dt = date("Y-m-d",$uptime)."T".date("H:i:s",$uptime)."+00:00";
                     $xml.='
 <url>
-    <loc>'.Yii::app()->request->hostInfo.'/article/12730/'.$i.'.html</loc>
+    <loc>http://www.mtianya.com/article/12730/'.$i.'.html</loc>
     <lastmod>'.$dt.'</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.5</priority>
@@ -127,7 +127,7 @@ EOF;
                     $dt = date("Y-m-d",$article->uptime)."T".date("H:i:s",$article->uptime)."+00:00";
                     $xml.='
 	<sitemap>
-		<loc>'.Yii::app()->request->hostInfo.'/api/'.$article->id.'/sitemap.xml</loc>
+		<loc>http://www.mtianya.com/api/'.$article->id.'/sitemap.xml</loc>
 		<lastmod>'.$dt.'</lastmod>
 	</sitemap>
 ';
