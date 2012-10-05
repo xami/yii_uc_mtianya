@@ -164,7 +164,7 @@ function cmenu(o, num){
             if(type==null){
                 alert("请选先择搜索类型");
             }else{
-                window.location="/search/"+type+"/"+key+"/index.html";
+                window.location="/search/"+type+"/"+encodeURIComponent(key)+"/index.html";
             }
 
         });
