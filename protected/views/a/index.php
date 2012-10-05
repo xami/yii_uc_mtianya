@@ -2,7 +2,7 @@
 $aid = Yii::app()->request->getParam('aid', 0);
 $article=Article::model()->with(array('channel','item'))->findByPk($aid);
 
-if($article->channel->status==0 || $article->item->status==0 || $article->status==0){
+if(/*$article->channel->status==0 || $article->item->status==0 ||*/ $article->status==0){
     $this->render('error', array('code'=>'404','message'=>'当前文章不存在或者已经被删除'));
     return;
 }
