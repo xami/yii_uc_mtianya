@@ -152,7 +152,7 @@ EOF;
 <a title="我的天涯论坛" href="http://bbs.mtianya.com">我的天涯论坛</a>&nbsp;&nbsp;
 <a title="文章列表" href="/search/title/mtianya/index.html">文章列表</a>&nbsp;&nbsp;
 <a title="网站地图" href="/sitemap">网站地图</a>&nbsp;&nbsp;
-<a title="文章索引" href="/api/sitemaps.xml"><img alt="文章链接" src="/images/xml.gif"></a>
+<a title="文章索引" href="/api/sitemaps.xml"><img alt="文章链接" src="/images/xml.gif" /></a>
 EOF;
     }
 }

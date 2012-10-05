@@ -28,10 +28,10 @@
                 echo '<a href="/">'.CHtml::encode(Yii::app()->name).'</a><span class="c_mark">总贴数:'.Yii::app()->tianya->getCountArticle().'</span>';
             ?></div>
             <div class="search">
-                <label><input type="radio" <?php echo $type=='author' ? 'checked="checked"': '';?> value="author" name="type" id="type_author">作者</label>
-                <label><input type="radio" <?php echo $type=='title' ? 'checked="checked"': '';?> value="title" name="type" id="type_title">标题</label>
-                <input type="text" name="q" id="search_key" size="36" value="<?php echo $key;?>" maxlength="80">
-                <input type="button" id="search" value="站内搜索">
+                <label><input type="radio" <?php echo $type=='author' ? 'checked="checked"': '';?> value="author" name="type" id="type_author" />作者</label>
+                <label><input type="radio" <?php echo $type=='title' ? 'checked="checked"': '';?> value="title" name="type" id="type_title" />标题</label>
+                <input type="text" name="q" id="search_key" size="36" value="<?php echo $key;?>" maxlength="80" />
+                <input type="button" id="search" value="站内搜索" />
             </div>
         </div><!-- header -->
 
@@ -77,9 +77,6 @@
 <div id="footer">
     <div class="right"><?php echo Ads::footer_link();?></div>
 </div><!-- footer -->
-
-</body>
-
 
 
 <script type="text/javascript">

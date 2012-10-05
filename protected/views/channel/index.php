@@ -57,7 +57,7 @@ echo '&nbsp;<a '.(($sort=='reach')?'class="selected"':'').' href="/channel/'.$ci
 echo '&nbsp;<a '.(($sort=='reply')?'class="selected"':'').' href="/channel/'.$cid.'-reply/index.html">'.'回复数</a>';
 echo '&nbsp;<a '.(($sort=='hot')?'class="selected"':'').' href="/channel/'.$cid.'-hot/index.html">'.'本站访问量</a>';
 echo '&nbsp;<a '.(($sort=='uptime')?'class="selected"':'').' href="/channel/'.$cid.'-uptime/index.html">'.'最新更新</a>';
-echo '&nbsp;<span class="right"><a target="_blank" href="/api/'.$cid.'/sitemaps.xml"><img src="/images/xml.gif"></a></span>';
+echo '&nbsp;<span class="right"><a target="_blank" href="/api/'.$cid.'/sitemaps.xml"><img src="/images/xml.gif" /></a></span>';
 ?>
 </div>
 
