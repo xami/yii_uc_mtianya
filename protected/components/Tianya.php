@@ -845,5 +845,150 @@ function cmenu(o, num){
         }
     }
 
+    public function is_tianya($src)
+    {
+        //是否是正常的url
+        if(Tools::is_url($src)===false){
+            return array('500'=>'请提供正确的链接地址,并且需要在前面加http://');
+        }
+
+        //解析帖子信息
+        //如果是普通版链接,转换成3G版
+        $pu=parse_url($src);
+        if($pu['host']=='www.tianya.cn' || $pu['host']=='tianya.cn'){
+            $path=explode('/', $pu['path']);
+            if(count($path)!=6 || !empty($path[0])){
+                return array('500'=>'只支持主板和副版的内容整理');
+            }
+            $key=$path[3];
+            if(strlen($key)<2){
+                return array('500'=>'只支持主板和副版的内容整理');
+            }
+            $aid=intval($path[5]);
+            if($aid<1){
+                return array('500'=>'只支持主板和副版的内容整理');
+            }
+            $rt_src='http://3g.tianya.cn/bbs/art.jsp?item='.$key.'&id='.$aid;
+        }else if($pu['host']=='3g.tianya.cn'){
+            parse_str($pu['query'], $path);
+            if(empty($path['item']) || empty($path['id']) || !is_numeric($path['id'])){
+                return array('500'=>'只支持主板和副版的内容整理');
+            }
+            $key=trim($path['item']);
+            if(strlen($key)<2){
+                return array('500'=>'只支持主板和副版的内容整理');
+            }
+            $aid=intval($path['id']);
+            if($aid<1){
+                return array('500'=>'只支持主板和副版的内容整理');
+            }
+            $rt_src='http://3g.tianya.cn/bbs/art.jsp?item='.$key.'&id='.$aid;
+        }else{
+            return array('500'=>'只支持主板和副版的内容整理');
+        }
+
+        //取得板块和频道编号
+        $item=Item::model()->find('`key` LIKE :key AND status=1', array(':key'=>$key));
+        if(!isset($item->id) || empty($item->id)){
+            return array('500'=>'很抱歉,此版块内容不予整理');
+        }
+        if(!isset($item->channel->id) || empty($item->channel->id)){
+            return array('500'=>'很抱歉,此版块内容不予整理');
+        }
+
+        //取得当前链接html内容
+        $html=$this->OZSnoopy($rt_src, '', '',3600);
+        if(empty($html)){
+            return array('500'=>'获取内容失败,网络繁忙或者对方服务忙,请稍后再试');
+        }
+
+        //校验是否是首页,不是则重新取得首页内容
+        $pg=Tools::cutContent($html, '<div class="pg">', '</div>');
+        preg_match_all("'<\s*a\s.*?href\s*=\s*([\"\'])?(?(1)(.*?)\\1|([^\s\>]+))[^>]*>?(.*?)</a>'isx",$pg,$links);
+        if(!isset($links[4][0])){
+            return array('550'=>'帖子页数还未满一页,需要整理吗?不需要吗?需要吗?...');
+        }
+        if($links[4][0]=='首页'){	//不是首页,则会显示跳转到首页的链接
+            if(!isset($links[2][0]) || empty($links[2][0])){
+                return array('500'=>'无法正常分析此页内容,我承认是我的失败');
+            }
+            $index_parse=parse_url($links[2][0]);
+            if(!isset($index_parse['path']) || $index_parse['path']!='art.jsp'){
+                return array('500'=>'无法正常分析此页内容,我承认是我的失败');
+            }
+            if(!isset($index_parse['query']) || empty($index_parse['query'])){
+                return array('500'=>'无法正常分析此页内容,我承认是我的失败');
+            }
+
+            parse_str(html_entity_decode($index_parse['query']), $index_str);
+
+            if(!isset($index_str[item]) || $index_str[item]!=$key){
+                return array('500'=>'无法正常分析此页内容,我承认是我的失败');
+            }
+            if(!isset($index_str[id]) || intval($index_str[id])!=$index_str[id]){
+                return array('500'=>'无法正常分析此页内容,我承认是我的失败');
+            }
+
+            //重新取得首页内容
+            $aid=intval($index_str[id]);
+            $rt_src='http://3g.tianya.cn/bbs/art.jsp?item='.$key.'&id='.$aid;
+            $html=self::getSnoopy($rt_src);
+            if($html===false){
+                return array('500'=>'获取内容失败,网络繁忙或者对方服务忙,请稍后再试');
+            }
+        }else if($links[4][0]!='下一页'){
+            return array('500'=>'无法正常分析此页内容,我承认是我的失败');
+        }
+
+
+
+        //正文内容之前的头部验证
+        $nav=Tools::cutContent($html, '<div class="p3">', '</div>');
+        if(strpos($nav, '只看楼主')===false || strpos($nav, '最新回帖')===false || strpos($nav, '去底部')===false){
+            return array('500'=>'获取远程链接内容失败或者不是天涯的帖子');
+        }
+
+        //正文内容之后的翻页表单验证,顺便校验页面是否完整
+        //多于1页,会有get形式的翻页表单,如果没有则返回错误
+//        pd($html);
+        $form_get=Tools::cutContent($html, 'action="art.jsp"', '</form>');
+        if(strpos($form_get, 'idwriter')===false || strpos($form_get, 'item')===false || strpos($form_get, '转到该页')===false){
+            return array('500'=>'获取远程链接内容失败或者不是天涯的帖子');
+        }
+
+
+        return array('200'=>
+        array(
+            'html'=>$html,
+            'cid'=>$item->channel->id,
+            'tid'=>$item->id,
+            'aid'=>$aid,
+            'src'=>$rt_src,
+        ));
+    }
+
+    public function get_tianya($html)
+    {
+        $info=array();
+
+        //title,tag
+        $full_title=trim(Tools::cutContent($html, '<title>', '</title>'));
+        $title_tag=Tools::cut_title_tag($full_title);
+        $info['tag']=$title_tag['tag'];
+        $info['title']=$title_tag['title'];
+
+        //reach,replay,un
+        $head=Tools::cutContent($html, '<div class="lk">楼主:', 'div class="lk">');
+        $info['reach']=intval(Tools::cutContent($head, '访问:', '回复:'));
+        $info['reply']=intval(Tools::cutContent($head, '回复:', '<br/>'));
+        $info['un']=Tools::cutContent($head, '">', '</a><br/>');
+
+        //page
+        $footer=Tools::cutContent($html, 'action="art.jsp"', '</form>');
+        $info['page']=intval(Tools::cutContent($footer, '(1/', '页)'));
+
+        return $info;
+    }
+
 
 }

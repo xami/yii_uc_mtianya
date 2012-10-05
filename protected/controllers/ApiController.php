@@ -286,6 +286,131 @@ EOF;
         $image->render();
     }
 
+    public function actionDo()
+    {
+        $src=isset($_REQUEST['src']) ? urldecode(trim($_REQUEST['src'])) : '';
+        $type=isset($_REQUEST['type']) ? trim($_REQUEST['type']) : 'tianya';
+
+        $error='';
+
+        if(!Tools::is_url($src)){
+            $error='请提供正确的链接地址,并且需要在前面加http://';
+        }
+
+        //目前只支持tianya
+        if(!in_array($type,array('tianya'))){
+            $error='不支持此类型';
+        }
+
+        $C1=Yii::app()->tianya->is_tianya($src);
+        $key=array_keys($C1);
+        $C1_ST=array_pop($key);
+
+        if($C1_ST!=200){
+            $error=$C1[$C1_ST];
+        }
+
+        if(!empty($error)){
+            pd(json_encode(array(
+                'responseStatus'=>'500',
+                'responseDetails'=>$error,
+                'responseData'=>null,
+            )));
+        }
+
+        $article=Article::model()->find('aid=:aid AND tid=:tid AND cid=:cid', array(
+            ':aid'=>$C1[200]['aid'],
+            ':tid'=>$C1[200]['tid'],
+            ':cid'=>$C1[200]['cid'],
+        ));
+
+        if(empty($article)){
+            $article=new Article();
+            $C2=Yii::app()->tianya->get_tianya($C1[200]['html']);
+            $now=time();
+
+            $article->cid=$C1[200]['cid'];
+            $article->tid=$C1[200]['tid'];
+            $article->aid=$C1[200]['aid'];
+
+            $article->title=$C2['title'];
+            $article->tag=$C2['tag'];
+            $article->key='';
+            $article->page=$C2['page'];
+            $article->un=$C2['un'];
+            $article->cto=0;
+            $article->pcount=0;
+            $article->mktime=$now;
+            $article->uptime=$now;
+            $article->src=$C1[200]['src'];
+            $article->status=1;
+            $article->reach=$C2['reach'];
+            $article->reply=$C2['reply'];
+            $article->hot=0;
+
+            if($article->page>50 || $article->reach>100000 || $article->reply>1000){
+                $article->save();
+            }
+        }else{
+            pd(json_encode(array(
+                'responseStatus'=>'200',
+                'responseDetails'=>'我的天涯',
+                'responseData'=>array(
+                    'link'=>'http://www.mtianya.com/article/'.$article->id.'/index.html',
+                    'title'=>$article->title,
+                    'un'=>$article->un,
+                    'page'=>$article->page,
+                    'reach'=>$article->reach,
+                    'reply'=>$article->reply,
+                    'aid'=>$article->id,
+                    'tid'=>$article->item->id,
+                    'cid'=>$article->channel->id,
+                ),
+            )));
+        }
+//		pd($article);
+//		pr($C1);
+//		pr($C2);
+        if(isset($article->id) && $article->id>0){
+            pd(json_encode(array(
+                'responseStatus'=>'200',
+                'responseDetails'=>'我的天涯',
+                'responseData'=>array(
+                    'link'=>'http://www.mtianya.com/article/'.$article->id.'/index.html',
+                    'title'=>$article->title,
+                    'un'=>$article->un,
+                    'page'=>$article->page,
+                    'reach'=>$article->reach,
+                    'reply'=>$article->reply,
+                    'aid'=>$article->id,
+                    'tid'=>$article->item->id,
+                    'cid'=>$article->channel->id,
+                ),
+            )));
+        }else{
+            if($article->page<100)
+                $reson='原帖页数('.$article->page.')';
+            else if($article->reach<100)
+                $reson='原帖访问量('.$article->reach.')';
+            else if($article->reply<100)
+                $reson='原帖回复数('.$article->reply.')';
+            pd(json_encode(array(
+                'responseStatus'=>'301',
+                'responseDetails'=>'<span class="red">'.$reson.'不满足</span><span class="green">[整理条件]</span>,<span class="red">请更换其他的帖子或阅读原帖</span>',
+                'responseData'=>array(
+                    'link'=>$src,
+                    'title'=>$article->title,
+                    'un'=>$article->un,
+                    'page'=>$article->page,
+                    'reach'=>$article->reach,
+                    'reply'=>$article->reply,
+                    'tid'=>$article->item->id,
+                    'cid'=>$article->channel->id,
+                ),
+            )));
+        }
+    }
+
 
 	// Uncomment the following methods and override them if needed
 	/*

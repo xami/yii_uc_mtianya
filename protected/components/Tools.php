@@ -40,6 +40,27 @@ class Tools
 
     }
 
+    public static function cut_title_tag($full_title)
+    {
+        $full_title=trim($full_title);
+        if(empty($full_title)){
+            return false;
+        }
+        $cut=strpos($full_title, ']');
+        if(strpos($full_title, '[')===0 && $cut!==false){
+            $tag=self::cutContent($full_title, '[', ']');
+            $title=mb_substr($full_title, $cut+1);
+        }else{
+            $tag='';
+            $title=$full_title;
+        }
+
+        return array(
+            'tag'=>$tag,
+            'title'=>$title,
+        );
+    }
+
     public static function is_url($url){
         $validate=new CUrlValidator();
         if(empty($url)){
