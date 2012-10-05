@@ -60,6 +60,7 @@ function copy_link(){
 }
 
 function orzero(){
+$( "#snoti" ).hide();
 '.
 CHtml::ajax(array(
 	'url'=>Yii::app()->createUrl('api/do'),
