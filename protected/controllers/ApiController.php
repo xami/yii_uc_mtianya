@@ -225,7 +225,7 @@ EOF;
                 $image->render();
                 return;
             } catch (Exception $e) {
-                
+                echo 1;
             }
         }
 
