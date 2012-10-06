@@ -220,12 +220,11 @@ EOF;
         );
 
         if(is_file($img_file)){
-            try {
+            $image_info = getimagesize($img_file);
+            if (!is_array($image_info) OR count($image_info) < 3){
                 $image = new Image($img_file);
                 $image->render();
                 return;
-            } catch (Exception $e) {
-                echo 1;
             }
         }
 
