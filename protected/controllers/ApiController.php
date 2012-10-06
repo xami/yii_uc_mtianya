@@ -220,9 +220,13 @@ EOF;
         );
 
         if(is_file($img_file)){
-            $image = new Image($img_file);
-            $image->render();
-            return;
+            try {
+                $image = new Image($img_file);
+                $image->render();
+                return;
+            } catch (Exception $e) {
+                
+            }
         }
 
         $img_data=Yii::app()->cache->get($key);

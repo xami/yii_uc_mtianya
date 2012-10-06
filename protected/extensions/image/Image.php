@@ -87,7 +87,7 @@ class Image {
 		error_reporting($ER);
 
 		// Make sure that the image is readable and valid
-		if ( ! is_array($image_info) OR count($image_info) < 3)
+		if (!is_array($image_info) OR count($image_info) < 3)
 			throw new CException('image file unreadable');
 
 		// Check to make sure the image type is allowed
