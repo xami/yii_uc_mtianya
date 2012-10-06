@@ -198,6 +198,8 @@ EOF;
 
     public function actionImg(){
         $src  = urldecode(Yii::app()->request->getParam('src', ''));       //图片水印链接
+        $src=MCrypy::decrypt($src, Yii::app()->tianya->mc_key, 128);
+
         if(empty($src) || !Tools::is_url($src)){
             throw new CException('Src must be real url', 1);
         }
@@ -209,6 +211,19 @@ EOF;
         $mark_src  = trim(Yii::app()->request->getParam('ms', ''));      //图片水印链接
         $mark    =  trim(Yii::app()->request->getParam('m', 'MTIANYA.COM'));       //文字水印
         $key = md5(serialize(array($src, $height, $width, $ww, $mark, $mark_src)));
+        $img_file=Yii::app()->tianya->getCacheImg($key);
+        //添加水印处理
+        include_once(
+            Yii::getPathOfAlias(
+                'application.extensions.image'
+            ).DIRECTORY_SEPARATOR.'Image.php'
+        );
+
+        if(is_file($img_file)){
+            $image = new Image($img_file);
+            $image->render();
+            return;
+        }
 
         $img_data=Yii::app()->cache->get($key);
         if(!empty($img_data)){
@@ -238,15 +253,7 @@ EOF;
             Yii::app()->cache->set($key, $img_data);
         }
 
-        //添加水印处理
-        include_once(
-            Yii::getPathOfAlias(
-                'application.extensions.image'
-            ).DIRECTORY_SEPARATOR.'Image.php'
-        );
-        $img_file=Yii::app()->tianya->getCacheImg($key);
         $image = new Image($img_file);
-
         $ws=$image->width;
         $hs=$image->height;
         if(empty($ws) || empty($hs)){
@@ -280,7 +287,6 @@ EOF;
                 $image->watermark($mark_src,true, $ww);
             }
         }
-
         //覆盖保持处理后的图片
         $image->save();
         $image->render();

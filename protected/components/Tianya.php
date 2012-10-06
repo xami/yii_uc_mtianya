@@ -11,10 +11,15 @@
 
 class Tianya extends CApplicationComponent
 {
+    private $_mc_key='vJGJvQyFNQeejt3S';
     private $key='{"idwriter":"60257436","key":"866084533","chk":"e3f484000ae7ec99e2249b076fb09001"}';
     protected  $_article;
     protected  $_item;
     protected  $_channel;
+
+    public function getMc_key(){
+        return $this->_mc_key;
+    }
 
     public function initSqlite($article){
         if(! $article instanceof OzActiveRecord){
@@ -837,6 +842,7 @@ function cmenu(o, num){
     {
         if($matches[3]=='(原图)'){
             $img_src=trim($matches[2]);
+            $img_src=MCrypy::encrypt($img_src, Yii::app()->tianya->mc_key, 128);
             $img_s=Yii::app()->createUrl('api/img',array('w'=>925, 'src'=>urlencode($img_src)));
             $img_b=Yii::app()->createUrl('api/img',array('src'=>urlencode($img_src)));
             return '<a href="'.$img_b.'" target="_blank"><img src="'.$img_s.'" /></a>';
