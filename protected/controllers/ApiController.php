@@ -212,6 +212,11 @@ EOF;
         $mark    =  trim(Yii::app()->request->getParam('m', 'MTIANYA.COM'));       //文字水印
         $key = md5(serialize(array($src, $height, $width, $ww, $mark, $mark_src)));
 
+        $img_file=Yii::app()->tianya->getCacheFile($key);
+        if(is_file($img_file)){
+            Yii::app()->tianya->getCacheImg($key, $render=true);
+        }
+
         //添加水印处理
         include_once(
             Yii::getPathOfAlias(
@@ -219,32 +224,15 @@ EOF;
             ).DIRECTORY_SEPARATOR.'Image.php'
         );
 
-        $img_file=Yii::app()->tianya->getCacheImg($key);
-        if(is_file($img_file) && is_readable($img_file)){
-            try{
-                $image = new Image($img_file);
-                $image->render();
-                return;
-            }catch (Exception $e){
-                $this->watermark($key,$src,$width,$height, $ww, $mark_src, $mark);
-            }
-        }
-
-        $this->watermark($key,$src,$width,$height, $ww, $mark_src, $mark);
-    }
-
-    public function watermark($key, $src, $width, $height, $ww, $mark_src, $mark){
-
+        //第一次进入加水印
         $img_data=Yii::app()->cache->get($key);
-        if(!empty($img_data)){
-            Yii::app()->tianya->getCacheImg($key, $render=true);
-        }else{
+        if(empty($img_data)){
             //从网络取得
             set_time_limit(300);
             $img_data=Yii::app()->tianya->OZSnoopy($src,'','', 3600*24);
             //目标网址数据为空
             if(empty($img_data)){
-                throw new CException('Can\'t get url data', 2);
+                throw new CException('无法取得数据源', 2);
             }
             //解析二次跳转的目标内容
             include_once(
@@ -258,24 +246,16 @@ EOF;
                 $real_src = $html_obj->find('img',0)->src;
                 $img_data=Yii::app()->tianya->OZSnoopy($real_src,'','', 3600);
             }
-
             //保存临时文件,原始图片
             Yii::app()->cache->set($key, $img_data);
         }
 
-        //添加水印处理
-        include_once(
-            Yii::getPathOfAlias(
-                'application.extensions.image'
-            ).DIRECTORY_SEPARATOR.'Image.php'
-        );
-
-        $img_file=Yii::app()->tianya->getCacheImg($key);
+        Yii::app()->tianya->getCacheImg($key, $render=true);
         $image = new Image($img_file);
         $ws=$image->width;
         $hs=$image->height;
         if(empty($ws) || empty($hs)){
-            throw new CException('Can\'t process the image', 2);
+            throw new CException('无法处理池图片', 2);
         }
 
         //设置图片大小
@@ -310,6 +290,7 @@ EOF;
         $image->save();
         $image->render();
     }
+
 
     public function actionDo()
     {
