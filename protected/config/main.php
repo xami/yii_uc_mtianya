@@ -89,6 +89,8 @@ return array(
                 //Article
                 '<controller:article>/<aid:\d+>/<C_page:\d+>.html'=>array('a/index', 'caseSensitive'=>false),
                 '<controller:article>/<aid:\d+>/index.html'=>array('a/index', 'caseSensitive'=>false),
+                '<controller:article>/<aid:\d+>/1.html'=>array('a/index', 'caseSensitive'=>false),
+                '<controller:article>/<aid:\d+>/'=>array('a/index', 'caseSensitive'=>false),
 
                 //search
                 'search/<A_sort:\w+>/<type:\w+>/<key:\w+>/<Article_page:\d+>.html'=>array('api/index', 'caseSensitive'=>false),
