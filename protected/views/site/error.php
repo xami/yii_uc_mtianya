@@ -13,3 +13,7 @@ $this->breadcrumbs=array(
 <div class="error">
 <?php echo CHtml::encode($message); ?>
 </div>
+
+<script language="javascript" type="text/javascript">
+    window.location.href="http://www.mtianya.com";
+</script>
