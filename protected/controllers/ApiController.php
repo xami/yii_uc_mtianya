@@ -226,12 +226,12 @@ EOF;
                 $image->render();
                 return;
             }catch (Exception $e){
-                $this->watermark($key,$src);
+                $this->watermark($key,$src,$width,$height, $mark_src, $mark);
             }
         }
     }
 
-    public function watermark($key, $src){
+    public function watermark($key, $src, $width, $height, $mark_src, $mark){
 
         $img_data=Yii::app()->cache->get($key);
         if(!empty($img_data)){
