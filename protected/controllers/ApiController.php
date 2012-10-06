@@ -211,7 +211,7 @@ EOF;
         $mark_src  = trim(Yii::app()->request->getParam('ms', ''));      //图片水印链接
         $mark    =  trim(Yii::app()->request->getParam('m', 'MTIANYA.COM'));       //文字水印
         $key = md5(serialize(array($src, $height, $width, $ww, $mark, $mark_src)));
-        $img_file=Yii::app()->tianya->getCacheImg($key);
+
         //添加水印处理
         include_once(
             Yii::getPathOfAlias(
@@ -219,6 +219,7 @@ EOF;
             ).DIRECTORY_SEPARATOR.'Image.php'
         );
 
+        $img_file=Yii::app()->tianya->getCacheImg($key);
         if(is_file($img_file) && is_readable($img_file)){
             try{
                 $image = new Image($img_file);
@@ -231,6 +232,7 @@ EOF;
     }
 
     public function watermark($key, $src){
+
         $img_data=Yii::app()->cache->get($key);
         if(!empty($img_data)){
             Yii::app()->tianya->getCacheImg($key, $render=true);
@@ -266,6 +268,7 @@ EOF;
             ).DIRECTORY_SEPARATOR.'Image.php'
         );
 
+        $img_file=Yii::app()->tianya->getCacheImg($key);
         $image = new Image($img_file);
         $ws=$image->width;
         $hs=$image->height;
