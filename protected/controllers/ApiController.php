@@ -220,7 +220,8 @@ EOF;
         );
 
         if(is_file($img_file) && is_readable($img_file)){
-            $image_info = getimagesize($img_file);
+            $image_info='';
+            $image_info = @getimagesize($img_file);
             if (!is_array($image_info) OR count($image_info) < 3){
                 $image = new Image($img_file);
                 $image->render();
