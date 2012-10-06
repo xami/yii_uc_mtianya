@@ -220,15 +220,20 @@ EOF;
         );
 
         if(is_file($img_file) && is_readable($img_file)){
-            $image_info='';
-            $image_info = @getimagesize($img_file);
-            if (!is_array($image_info) OR count($image_info) < 3){
-                $image = new Image($img_file);
-                $image->render();
-                return;
+            try{
+                $image_info = getimagesize($img_file);
+                if (!is_array($image_info) OR count($image_info) < 3){
+                    $image = new Image($img_file);
+                    $image->render();
+                    return;
+                }
+            }catch (Exception $e){
+                $this->watermark($key,$src);
             }
         }
+    }
 
+    public function watermark($key, $src){
         $img_data=Yii::app()->cache->get($key);
         if(!empty($img_data)){
             Yii::app()->tianya->getCacheImg($key, $render=true);
@@ -256,6 +261,13 @@ EOF;
             //保存临时文件,原始图片
             Yii::app()->cache->set($key, $img_data);
         }
+
+        //添加水印处理
+        include_once(
+            Yii::getPathOfAlias(
+                'application.extensions.image'
+            ).DIRECTORY_SEPARATOR.'Image.php'
+        );
 
         $image = new Image($img_file);
         $ws=$image->width;
@@ -291,6 +303,7 @@ EOF;
                 $image->watermark($mark_src,true, $ww);
             }
         }
+
         //覆盖保持处理后的图片
         $image->save();
         $image->render();
