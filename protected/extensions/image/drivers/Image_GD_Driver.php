@@ -342,7 +342,7 @@ class Image_GD_Driver extends Image_Driver {
             $wh=60;
             $font = Yii::getPathOfAlias(
                 'application.extensions.image.font'
-            ).DIRECTORY_SEPARATOR.'tahomabd.ttf';
+            ).DIRECTORY_SEPARATOR.'segoepr.ttf';
             // Create the image
             $watermark = imagecreatetruecolor($ww*$water_db, $wh*$water_db);
 
