@@ -333,7 +333,8 @@ a:hover {
 /* Wrapper */
 
 #wrap {
-    margin: 0 160px;
+    margin: 0 auto;
+    width: 780px;
 }
 body.single{
     margin: 0 auto;
