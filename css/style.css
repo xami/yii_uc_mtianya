@@ -331,9 +331,13 @@ a:hover {
 
 
 /* Wrapper */
+
 #wrap {
-    margin: auto;
-    max-width: 45em;
+    margin: 0 160px;
+}
+body.single{
+    margin: 0 auto;
+    padding: 0;
 }
 
 
@@ -1081,9 +1085,6 @@ form p,
         padding: 1.5em;
     }
 
-    #wrap {
-        max-width: 80em;
-    }
 
     #content {
         float: left;

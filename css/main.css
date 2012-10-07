@@ -22,9 +22,10 @@ body
 
 #content
 {
-    width: 720px;
+    width: 685px;
     padding: 10px;
     float: right;
+    display: inline-block;
     margin: 0 20px 0;
 }
 
@@ -281,9 +282,6 @@ body > #page {height: auto; min-height: 99%;}
     clear:both;
 }
 .list-view{
-    width: 100%;
-    display: inline-block;
-    float: left;
     border: 1px solid #C9E0ED;
     padding: 8px 8px 0 8px;
 }
@@ -348,4 +346,8 @@ body > #page {height: auto; min-height: 99%;}
     height: 38px;
     padding: 5px;
     clear: both;
+}
+
+.container{
+    min-width: 730px;
 }

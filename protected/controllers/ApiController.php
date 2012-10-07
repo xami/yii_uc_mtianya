@@ -55,7 +55,7 @@ class ApiController extends Controller
         Yii::app()->tianya->initSqlite($article);
         $page=(int)(($article->pcount/20)+1);
         if($type=='xml'){
-            $cache=Yii::app()->cache;
+            $cache=Yii::app()->fcache;
             $xml=$cache['article::xml::'.$aid];
             if(empty($xml)){
                 $xml=<<<EOF
@@ -97,7 +97,7 @@ EOF;
         $cid=Yii::app()->request->getParam('cid', 0);
         $tid=Yii::app()->request->getParam('tid', 0);
         if($type=='xml'){
-            $cache=Yii::app()->cache;
+            $cache=Yii::app()->fcache;
             $xml=$cache['channel::xml::'.$cid.'::'.$tid];
             if(empty($xml)){
                 $criteria=new CDbCriteria;
