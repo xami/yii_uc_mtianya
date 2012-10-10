@@ -353,16 +353,17 @@ class Image_GD_Driver extends Image_Driver {
             $blue = imagecolorallocate($watermark, 0, 0, 255);
             $green = imagecolorallocate($watermark, 0, 128, 0);
             $white = imagecolorallocate($watermark, 255, 255, 255);
-            $black = imagecolorallocate($watermark, 0, 0, 0);
-            $color_select=2;
+//            $black = imagecolorallocate($watermark, 0, 0, 0);
+//            $color_select=2;
             $color=array($grey, $red, $yellow, $blue, $green,$white);
 
             imagefilledrectangle($watermark, 0, 0, $ww, $wh, $grey);    //创建画布
             // Add some shadow to the text
 //            imagettftext($watermark, 12, 10, 10, 47, $red, $font, $wm_str);
             // Add the text
+            imagettftext($watermark, 16, 10, 10, 47, $color[1], $font, $wm_str);
+            imagettftext($watermark, 16, 9, 12, 45, $color[2], $font, $wm_str);
 
-            imagettftext($watermark, 16*$water_db, 9, 12*$water_db, 45*$water_db, $color[$color_select], $font, $wm_str);
             imagecolortransparent($watermark,$grey);                    //透明化
 
 //            $watermark_new=imagecreatetruecolor($ww, $wh);
