@@ -199,6 +199,7 @@ EOF;
     public function actionImg(){
         $src  = urldecode(Yii::app()->request->getParam('src', ''));       //图片水印链接
         $src=MCrypy::decrypt($src, Yii::app()->tianya->mc_key, 128);
+        $src=trim($src);
 
         if(empty($src) || !Tools::is_url($src)){
             throw new CException('Src must be real url', 1);
@@ -240,7 +241,7 @@ EOF;
                     'application.extensions.simple_html_dom'
                 ).DIRECTORY_SEPARATOR.'simple_html_dom.php'
             );
-            $html_obj = str_get_html($img_data);
+            $html_obj = @str_get_html($img_data);
             $count=count($html_obj->find('img'));
             if($count==1){
                 $real_src = $html_obj->find('img',0)->src;
