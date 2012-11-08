@@ -399,6 +399,8 @@ function cmenu(o, num){
     }
 
     public function setItem($id, $next_src=''){
+        set_time_limit(300);
+
         $tid=intval($id);
         $criteria=new CDbCriteria;
         $criteria->with=array('count_article');
@@ -411,17 +413,37 @@ function cmenu(o, num){
 
         $_url='http://3g.tianya.cn/bbs/list.jsp?item='.$_item->key;
         if(!empty($next_src)){
-            $_url=htmlspecialchars_decode($next_src);
+            $_url=str_replace('&amp;', '&', $next_src);
+
+            $p_url = parse_url($_url);
+            parse_str($p_url['query'], $p_str);
+            $_url = 'http://3g.tianya.cn/bbs/list.jsp?'.http_build_query($p_str);
+
             if(!Tools::is_url($_url)){
                 return $this->_item=false;
             }
         }
-        $html=$this->OZSnoopy($_url);
-        if(empty($html)){
+
+//        pd($_url);
+//        $html=$this->OZSnoopy($_url);
+//        $html=file_get_contents('http://mtianya/test.php?src='.urlencode($_url));
+        $curl_out=$this->OZCurl($_url);
+        if(empty($curl_out["Result"])){
             return $this->_item=false;
         }
+        $html=$curl_out["Result"];
+
 
         $title=Tools::cutContent($html, '<br/>'."\r\n".'论坛-', "\r\n".'</div>');
+        if(empty($title)){
+            $title=Tools::cutContent($html, '<br/> 论坛-', ' </div>');
+        }
+        if(empty($title)){
+            $title=Tools::cutContent($html, '<br/>
+论坛-', '
+</div>');
+        }
+
         //校验页面是否下载完成
         $footer=Tools::cutContent($html, '<div class="lk">', '<br/>');
         if(empty($title) || strpos($footer, '下一页')===false || strpos($footer, $_item->key)===false){
@@ -479,8 +501,11 @@ function cmenu(o, num){
                         $_article[$i]->title = $title;
                         $_article[$i]->tag = $tag;
                         !empty($un) && $_article[$i]->un = $un;
-                        $_article[$i]->reach = $find['reach'];
-                        $_article[$i]->reply = $find['reply'];
+                        $_article[$i]->reach = $find['reach'][$i];
+                        $_article[$i]->reply = $find['reply'][$i];
+//                        pr($html);
+//                        pr($find);
+//                        pd($_article[$i]);
                         $_article[$i]->save();
                     }
                 }else{
@@ -602,7 +627,7 @@ function cmenu(o, num){
     {
         if(self::$_snoopy == null){
             self::$_snoopy = new Snoopy();
-            self::$_snoopy->agent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)";
+            self::$_snoopy->agent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/20100101 Firefox/16.0";
             self::$_snoopy->rawheaders["Pragma"] = "no-cache";
         }
 
@@ -994,6 +1019,58 @@ function cmenu(o, num){
         $info['page']=intval(Tools::cutContent($footer, '(1/', '页)'));
 
         return $info;
+    }
+
+    public static function OZCurl($src, $expire=60, $show=false)
+    {
+
+        $expire = intval($expire)>20 ? intval($expire) : 20;
+        $src = trim($src);
+        if(empty($src)) return false;
+//        if(Tools::is_url($src)) return false;
+
+        $c = null;
+        $key = md5($src);
+        $cache = Yii::app()->cache;
+//        $c=$cache->get($key);
+
+
+        if(empty($c)){
+            //Run curl
+            $curl = Yii::app()->CURL;
+            $curl->run(array(CURLOPT_REFERER => $src));
+            $curl->setUrl($src);
+            $curl->exec();
+
+            if(Yii::app()->CURL->isError()) {
+                // Error
+                var_dump($curl->getErrNo());
+                var_dump($curl->getError());
+
+            }else{
+                // More info about the transfer
+                $c=array(
+                    'ErrNo'=>$curl->getErrNo(),
+                    'Error'=>$curl->getError(),
+                    'Header'=>$curl->getHeader(),
+                    'Info'=>$curl->getInfo(),
+                    'Result'=>$curl->getResult(),
+                );
+            }
+            //小于5M缓存
+            if(sizeof($c)<1024*1024*5){
+                $cache->set($key, $c, $expire);
+            }
+        }
+
+        if($show==true){
+            if(!empty($c['Info']['content_type']))
+                header('Content-Type: '.$c['Info']['content_type']);
+            if($c['Info']['http_code']==200)
+                echo $c['Result'];
+        }
+
+        return $c;
     }
 
 

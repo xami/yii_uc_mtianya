@@ -181,6 +181,9 @@ return array(
             'class'=>'CFileCache',
             'cacheFileSuffix'=>'.php',
         ),
+        'CURL' =>array(
+            'class' => 'application.extensions.Curl',
+        ),
 	),
 
 	// application-level parameters that can be accessed

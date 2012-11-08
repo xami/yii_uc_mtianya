@@ -160,7 +160,9 @@ EOF;
     public function actionItem()
     {
         $id=Yii::app()->request->getParam('id', 0);
-        Yii::app()->tianya->item=$id;
+        $src=Yii::app()->request->getParam('src', '');
+
+        Yii::app()->tianya->setItem($id,$src);
         echo Yii::app()->tianya->item;
     }
 
