@@ -35,7 +35,7 @@ define('UC_CONNECT', 'mysql');              // 连接 UCenter 的方式: mysql/N
 //数据库相关 (mysql 连接时, 并且没有设置 UC_DBLINK 时, 需要配置以下变量)
 define('UC_DBHOST', 'localhost');           // UCenter 数据库主机
 define('UC_DBUSER', 'root');                // UCenter 数据库用户名
-define('UC_DBPW', '');                  // UCenter 数据库密码
+define('UC_DBPW', '555aaa@@@mysql');                  // UCenter 数据库密码
 define('UC_DBNAME', 'yii_uc');                // UCenter 数据库名称
 define('UC_DBCHARSET', 'utf8');             // UCenter 数据库字符集
 define('UC_DBTABLEPRE', 'yii_uc.uc_');            // UCenter 数据库表前缀
