@@ -2,9 +2,11 @@
 /protected/runtime/gii-1.1.11-dev/*.php
 /protected/runtime/*.log*
 /protected/runtime/cache/*
-/protected/data/tianya
 /assets/*
 /bbs/
 /home/
 /uc/
-
+/protected/runtime/*.log
+/assets/*
+/protected/runtime/cache/*
+/protected/data/*

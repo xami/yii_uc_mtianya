@@ -63,14 +63,14 @@
 
         <?php echo $content; ?>
 
-        <div id="ad_left">
-            <?php echo Ads::ad160x600();?>
-        </div>
-        <div id="ad_right">
-            <?php
-            echo Ads::ad160x600();
-            ?>
-        </div>
+<!--        <div id="ad_left">-->
+<!--            --><?php //echo Ads::ad160x600();?>
+<!--        </div>-->
+<!--        <div id="ad_right">-->
+<!--            --><?php
+//            echo Ads::ad160x600();
+//            ?>
+<!--        </div>-->
     </div>
 </div><!-- page -->
 
@@ -81,28 +81,28 @@
 
 <script type="text/javascript">
 /*<![CDATA[*/
-document.body.style.margin="0 165px";
-document.getElementById("ad_left").style.cssText='width:160px;left:2px;POSITION:absolute;TOP:120px;z-index:1;';
-document.getElementById("ad_right").style.cssText='width:160px;right:2px;POSITION:absolute;TOP:120px;z-index:1;';
-
-lastScrollY=0;
-function heartBeat(){
-    var diffY;
-    if (document.documentElement && document.documentElement.scrollTop)
-        diffY = document.documentElement.scrollTop;
-    else if (document.body)
-        diffY = document.body.scrollTop
-    else
-    {/*Netscape stuff*/}
-    percent=.1*(diffY-lastScrollY);
-    if(percent>0)percent=Math.ceil(percent);
-    else percent=Math.floor(percent);
-    document.getElementById("ad_left").style.top=parseInt(document.getElementById("ad_left").style.top)+percent+"px";
-    document.getElementById("ad_right").style.top=parseInt(document.getElementById("ad_right").style.top)+percent+"px";
-    lastScrollY=lastScrollY+percent;
-}
-
-window.setInterval(heartBeat,1);
+//document.body.style.margin="0 165px";
+//document.getElementById("ad_left").style.cssText='width:160px;left:2px;POSITION:absolute;TOP:120px;z-index:1;';
+//document.getElementById("ad_right").style.cssText='width:160px;right:2px;POSITION:absolute;TOP:120px;z-index:1;';
+//
+//lastScrollY=0;
+//function heartBeat(){
+//    var diffY;
+//    if (document.documentElement && document.documentElement.scrollTop)
+//        diffY = document.documentElement.scrollTop;
+//    else if (document.body)
+//        diffY = document.body.scrollTop
+//    else
+//    {/*Netscape stuff*/}
+//    percent=.1*(diffY-lastScrollY);
+//    if(percent>0)percent=Math.ceil(percent);
+//    else percent=Math.floor(percent);
+//    document.getElementById("ad_left").style.top=parseInt(document.getElementById("ad_left").style.top)+percent+"px";
+//    document.getElementById("ad_right").style.top=parseInt(document.getElementById("ad_right").style.top)+percent+"px";
+//    lastScrollY=lastScrollY+percent;
+//}
+//
+//window.setInterval(heartBeat,1);
 
 //analytics
 var _gaq = _gaq || [];

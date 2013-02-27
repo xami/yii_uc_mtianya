@@ -1,4 +1,5 @@
 <?php
+
 class Curl extends CApplicationComponent{
 	/**
 	* Curl config.
@@ -6,7 +7,7 @@ class Curl extends CApplicationComponent{
 	* @var array
 	*/
 	protected $_config = array(CURLOPT_RETURNTRANSFER => true);
-	
+
 	/**
 	* Curl handle.
 	*

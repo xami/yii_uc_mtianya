@@ -29,7 +29,7 @@ $dataProvider=new CActiveDataProvider('C',array(
     ),
 ));
 
-echo '<div style="float:left;margin-top:-8px;">'.Ads::share().Ads::link468x15().'</div>';
+//echo '<div style="float:left;margin-top:-8px;">'.Ads::share().Ads::link468x15().'</div>';
 echo '<div style="float:right;margin-top:-25px;margin-right:-15px;"><a href="/api/'.$article->id.'/sitemap.xml"><img src="/images/xml.gif"></a></div>';
 
 $this->widget('application.vendors.OListView', array(

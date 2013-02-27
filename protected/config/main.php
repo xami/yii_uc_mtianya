@@ -121,9 +121,9 @@ return array(
             'tablePrefix' => 'uc_',
         ),
         'oz_db'=>array(
-            'connectionString' => 'mysql:host=localhost;dbname=tianya',
+            'connectionString' => 'mysql:host=205.185.112.51;dbname=mtianyas_mtianya_com',
             'emulatePrepare' => true,
-            'username' => 'root',
+            'username' => 'mtianyas_root',
             'password' => '555aaa@@@mysql',
             'charset' => 'utf8',
             'class' => 'CDbConnection',      //此行必须添加
@@ -180,6 +180,9 @@ return array(
         'fcache'=>array(
             'class'=>'CFileCache',
             'cacheFileSuffix'=>'.php',
+        ),
+        'CURL' =>array(
+            'class' => 'application.extensions.Curl',
         ),
 	),
 
