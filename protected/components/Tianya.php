@@ -454,6 +454,7 @@ function cmenu(o, num){
         //帖子列表
         $content=Tools::cutContent($html, '<div class="p">', '</div>');
         $find=self::find_article_info($content);
+//        pd($find);
 
         if(isset($find['link']) && isset($find['content'])){
             if(empty($find['link']) || empty($find['content']) || (($count = count($find['link'])) !== count($find['content']))){
@@ -473,7 +474,9 @@ function cmenu(o, num){
 //				if((!isset($find['reach'][$i]) || $find['reach'][$i]<100000) && (!isset($find['reply'][$i]) || $find['reply'][$i]<1000))
 //					continue;
 
-                $aid=intval(Tools::cutContent($find['link'][$i], '&id=', '&idwriter=0&key=0&chk='));
+//                pr($find['link'][$i]."<br>");
+//                $aid=intval(Tools::cutContent($find['link'][$i], '&id=', '&idwriter=0&key=0&chk='));
+                $aid=intval(Tools::cutContent($find['link'][$i], '&id=', '&vu='));
                 if($aid<0){
                     return $this->_item=false;
                 }
@@ -492,7 +495,8 @@ function cmenu(o, num){
                 $criteria->condition='`tid`=:tid AND `aid`=:aid';
                 $criteria->params=array(':tid'=>$tid, ':aid'=>$aid);
                 $_article[$i] = $article->find($criteria);
-                //pr($find['content'][$i]);
+//                pr($find['content'][$i]."<br>");
+//                pr($_article[$i]->id."<br>");
 
                 if(isset($_article[$i]->id) && $_article[$i]->id>0){
                     //不更新状态，跳过
@@ -528,6 +532,7 @@ function cmenu(o, num){
                     $_article[$i]->reply = $find['reply'][$i];
                     $_article[$i]->hot = 0;
                     $_article[$i]->save();
+//                    pd($_article[$i]);
                 }
             }
             $j++;
