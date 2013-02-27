@@ -10,3 +10,4 @@
 /assets/*
 /protected/runtime/cache/*
 /protected/data/*
+/protected/config/main.php
